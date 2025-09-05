@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مسابقة تقييم المطعم</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap');
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Cairo', 'Tahoma', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      text-align: center;
+      direction: rtl;
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 30px 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border-radius: 0 0 30px 30px;
+      margin-bottom: 40px;
+      animation: slideDown 0.8s ease-out;
+    }
+    
+    header img {
+      max-width: 150px;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+      transition: transform 0.3s ease;
+    }
+    
+    header img:hover {
+      transform: scale(1.05);
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin: 20px 0;
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    section {
+      padding: 40px 20px;
+      margin: 30px 0;
+    }
+    
+    .steps {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px 30px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      animation: fadeInUp 0.8s ease-out 0.2s both;
+    }
+    
+    .steps p {
+      font-size: 1.2rem;
+      margin: 20px 0;
+      padding: 15px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      border-right: 4px solid #ff6b6b;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .steps p::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 4px;
+      height: 100%;
+      background: linear-gradient(45deg, #ff6b6b, #feca57);
+      transition: width 0.3s ease;
+    }
+    
+    .steps p:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .steps p:hover::before {
+      width: 8px;
+    }
+    
+    .steps a {
+      color: #25d366;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 5px 10px;
+      border-radius: 8px;
+      background: rgba(37, 211, 102, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .steps a:hover {
+      background: #25d366;
+      color: white;
+      transform: scale(1.05);
+    }
+    
+    .prize {
+      background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+      border-radius: 25px;
+      padding: 40px 30px;
+      font-size: 1.8rem;
+      color: #2d3436;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 20px 40px rgba(253, 203, 110, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .prize::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+      animation: shine 3s infinite;
+    }
+    
+    .countdown {
+      font-size: 1.4rem;
+      margin-top: 20px;
+      font-weight: 700;
+      color: #e17055;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .screenshot {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px 30px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-out 0.4s both;
+    }
+    
+    .screenshot h2 {
+      color: #2d3436;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    
+    .screenshot img {
+      max-width: 300px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .screenshot img:hover {
+      transform: scale(1.05);
+    }
+    
+    .cta {
+      margin: 40px 0;
+      animation: fadeInUp 0.8s ease-out 0.6s both;
+    }
+    
+    .cta a {
+      background: linear-gradient(45deg, #00b894, #00cec9);
+      color: white;
+      padding: 20px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 1.3rem;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(0, 184, 148, 0.3);
+      transition: all 0.3s ease;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .cta a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(0, 184, 148, 0.4);
+    }
+    
+    .cta a:hover::before {
+      left: 100%;
+    }
+    
+    .qr {
+      margin-top: 30px;
+    }
+    
+    .qr img {
+      border-radius: 15px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+    
+    .qr img:hover {
+      transform: scale(1.1);
+    }
+    
+    .faq {
+      max-width: 700px;
+      margin: auto;
+      text-align: right;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-out 0.8s both;
+    }
+    
+    .faq h2 {
+      text-align: center;
+      color: #2d3436;
+      font-size: 2rem;
+      margin-bottom: 30px;
+      font-weight: 700;
+      background: linear-gradient(45deg, #6c5ce7, #a29bfe);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .faq p {
+      margin: 20px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+      border-radius: 15px;
+      border-right: 4px solid #6c5ce7;
+      transition: all 0.3s ease;
+    }
+    
+    .faq p:hover {
+      transform: translateX(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .share {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      padding: 40px 30px;
+      margin: 30px auto;
+      max-width: 700px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      animation: fadeInUp 0.8s ease-out 1s both;
+    }
+    
+    .share button {
+      background: linear-gradient(45deg, #0984e3, #74b9ff);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 10px 30px rgba(9, 132, 227, 0.3);
+      transition: all 0.3s ease;
+      margin-bottom: 20px;
+    }
+    
+    .share button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(9, 132, 227, 0.4);
+    }
+    
+    .social-links {
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);
+      color: white;
+      padding: 15px 25px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 10px 30px rgba(240, 148, 51, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .social-links a::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .social-links a:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(240, 148, 51, 0.4);
+    }
+    
+    .social-links a:hover::before {
+      left: 100%;
+    }
+    
+    .instagram-icon {
+      width: 24px;
+      height: 24px;
+      background: white;
+      border-radius: 5px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      color: #e6683c;
+    }
+    
+    footer {
+      background: rgba(45, 52, 54, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 30px 20px;
+      margin-top: 50px;
+      font-size: 1rem;
+      color: #ddd;
+      border-radius: 30px 30px 0 0;
+      box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Animations */
+    @keyframes slideDown {
+      from {
+        transform: translateY(-100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(30px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+    
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.02);
+      }
+    }
+    
+    @keyframes shine {
+      0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);
+      }
+      100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);
+      }
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      
+      .steps, .prize, .screenshot, .faq, .share {
+        margin: 20px 10px;
+        padding: 30px 20px;
+      }
+      
+      .steps p, .faq p {
+        font-size: 1rem;
+        padding: 15px;
+      }
+      
+      .cta a {
+        padding: 15px 30px;
+        font-size: 1.1rem;
+      }
+      
+      .social-links {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      
+      .steps, .prize, .screenshot, .faq, .share {
+        margin: 15px 5px;
+        padding: 25px 15px;
+      }
+      
+      .steps p, .faq p {
+        font-size: 0.9rem;
+        padding: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <img src="logo.webp" alt="شعار المطعم">
+    <h1>قيّمنا على Google Maps وادخل السحب!</h1>
+  </header>
+
+  <section class="steps">
+    <p>📍 الخطوة 1: قيّم مطعمنا على خرائط جوجل</p>
+    <p>📸 الخطوة 2: التقط لقطة شاشة للتقييم</p>
+    <p>💬 الخطوة 3: أرسلها عبر واتساب إلى الرقم: <a href="https://wa.me/96876973837" target="_blank">7697 3837</a> 📱</p>
+    <p>🎁 النتيجة: دخولك في السحب على جوائزنا المميزة!</p>
+  </section>
+
+  <section class="prize">
+    ✨ اربح وجبة مجانية لشخصين ✨
+    <div class="countdown" id="countdown"></div>
+  </section>
+
+  <section class="screenshot">
+    <h2>مثال على اللقطة المطلوبة:</h2>
+    <img src="Screenshot.jpg" alt="مثال على لقطة الشاشة">
+  </section>
+
+  <section class="cta">
+    <a href="https://maps.app.goo.gl/yourRestaurantLink" target="_blank">قيّمنا الآن على Google Maps</a>
+    <div class="qr">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maps.app.goo.gl/yourRestaurantLink" alt="QR Code">
+    </div>
+  </section>
+
+  <section class="faq">
+    <h2>الأسئلة الشائعة</h2>
+    <p><strong>من يمكنه المشاركة؟</strong><br> جميع عملائنا الكرام.</p>
+    <p><strong>متى يتم السحب؟</strong><br> 30 سبتمبر 2025.</p>
+    <p><strong>كيف سيتم الإعلان عن الفائزين؟</strong><br> عبر حساباتنا في وسائل التواصل الاجتماعي.</p>
+  </section>
+
+  <section class="share">
+    <button onclick="sharePage()">شارك المسابقة مع أصدقائك</button>
+    <div class="social-links">
+      <a href="https://instagram.com/lamsat_almashawi" target="_blank">
+        <span class="instagram-icon">📷</span>
+        تابعنا على انستجرام
+      </a>
+    </div>
+  </section>
+
+  <footer>
+    © 2025 مطعم [اسم المطعم] - جميع الحقوق محفوظة
+  </footer>
+
+  <script>
+    // Countdown Timer
+    const countdownEl = document.getElementById('countdown');
+    const targetDate = new Date('2025-09-30T23:59:59').getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance < 0) {
+        countdownEl.innerHTML = "انتهى السحب!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownEl.innerHTML = `⏳ متبقي: ${days} يوم ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+    }
+
+    setInterval(updateCountdown, 1000);
+
+    // Share Button
+    function sharePage() {
+      if (navigator.share) {
+        navigator.share({
+          title: 'مسابقة تقييم المطعم',
+          text: 'قيّم مطعمنا على Google Maps وادخل السحب! 🎁',
+          url: window.location.href
+        });
+      } else {
+        alert('انسخ الرابط وشاركه مع أصدقائك: ' + window.location.href);
+      }
+    }
+  </script>
+</body>
+</html>
